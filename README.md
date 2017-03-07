@@ -1,3 +1,3 @@
 https://speed.bridge.net/
 
-Last updated: 2017-03-06T21:06:00
+Last updated: 2017-03-07T09:24:56Z
