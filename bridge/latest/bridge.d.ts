@@ -1,7 +1,7 @@
 ﻿/*
- * @version   : 1.11.0 - Bridge.NET
+ * @version   : 1.12.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2016-02-24
+ * @date      : 2016-04-07
  * @copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -156,6 +156,11 @@
     }
 
     export class OutOfMemoryException extends SystemException {
+        constructor(message: string, innerException: Exception);
+        constructor(message: string);
+    }
+
+    export class IndexOutOfRangeException extends SystemException {
         constructor(message: string, innerException: Exception);
         constructor(message: string);
     }
