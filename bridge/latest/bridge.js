@@ -1,7 +1,7 @@
 /*
- * @version   : 1.6.0 - Bridge.NET
+ * @version   : 1.7.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2015-06-23
+ * @date      : 2015-07-14
  * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -770,6 +770,26 @@
         }
     };
 
+    if (!Object.create) {
+        Object.create = function (o, properties) {
+            if (typeof o !== "object" && typeof o !== "function") {
+                throw new TypeError("Object prototype may only be an Object: " + o);
+            }
+            else if (o === null) {
+                throw new Error("This browser's implementation of Object.create is a shim and doesn't support 'null' as the first argument");
+            }
+
+            if (typeof properties != "undefined") {
+                throw new Error("This browser's implementation of Object.create is a shim and doesn't support a second argument");
+            }
+
+            function F() { }
+            F.prototype = o;
+
+            return new F();
+        }
+    }
+
     Bridge = core;
 })();
 
@@ -1425,6 +1445,7 @@
                 v,
                 ctorCounter,
                 isCtor,
+                ctorName,
                 name,
                 fn;
 
@@ -1532,12 +1553,32 @@
             for (name in prop) {
                 v = prop[name];
                 isCtor = name === "constructor";
+                ctorName = isCtor ? "$constructor" : name;
 
                 if (Bridge.isFunction(v) && (isCtor || Bridge.String.startsWith(name, "constructor\\$"))) {
                     ctorCounter++;
+                    isCtor = true;
                 }
 
-                prototype[isCtor ? "$constructor" : name] = prop[name];
+                prototype[ctorName] = prop[name];
+
+                if (isCtor) {
+                    (function (ctorName) {
+                        Class[ctorName] = function () {
+                            var args = Array.prototype.slice.call(arguments);
+
+                            if (this.$initMembers) {
+                                this.$initMembers.apply(this, args);
+                            }
+
+                            args.unshift(ctorName)
+                            this.$$initCtor.apply(this, args);
+                        };
+                    })(ctorName);
+
+                    Class[ctorName].prototype = prototype;
+                    Class[ctorName].prototype.constructor = Class;
+                }
             }
 
             if (ctorCounter == 0) {
@@ -3700,7 +3741,7 @@ Bridge.define('Bridge.TimeSpan', {
     },
 
     format: function (formatStr, provider) {
-        return this.format(formatStr, provider);
+        return this.toString(formatStr, provider);
     },
 
     toString: function (formatStr, provider) {
@@ -4358,7 +4399,7 @@ Bridge.Class.generic('Bridge.Dictionary$2', function (TKey, TValue) {
         },
 
         getValues: function () {
-            return new Bridge.DictionaryCollection$1(TKey)(this, false);
+            return new Bridge.DictionaryCollection$1(TValue)(this, false);
         },
 
         clear: function () {
@@ -4723,6 +4764,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
             this.checkIndex(index);
             this.items.splice(index, 1);
+            return true;
         },
 
         removeAt: function (index) {
@@ -4975,7 +5017,7 @@ Bridge.define('Bridge.Task', {
             return task;
         },
 
-        fromPromise: function (promise, handler) {
+        fromPromise: function (promise, handler, errorHandler) {
             var task = new Bridge.Task();
 
             if (!promise.then) {
@@ -4985,7 +5027,7 @@ Bridge.define('Bridge.Task', {
             promise.then(function () {
                 task.setResult(handler ? handler.apply(null, arguments) : arguments);
             }, function () {
-                task.setError(new Error(Array.prototype.slice.call(arguments, 0)));
+                task.setError(errorHandler ? errorHandler.apply(null, arguments) : new Error(Array.prototype.slice.call(arguments, 0)));
             });
 
             return task;
@@ -8295,3 +8337,11 @@ Bridge.define('Bridge.PropertyChangedEventArgs', {
     Bridge.Linq = {};
     Bridge.Linq.Enumerable = Enumerable;
 })(this);
+
+// module export
+if (typeof define === "function" && define.amd) { // AMD
+    define("bridge", [], function () { return Bridge; });
+}
+else if (typeof module !== "undefined" && module.exports) { // Node
+    module.exports = Bridge;
+}
