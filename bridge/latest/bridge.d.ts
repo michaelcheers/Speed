@@ -1,7 +1,7 @@
-﻿/*
- * @version   : 15.3.0 - Bridge.NET
+/*
+ * @version   : 15.4.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2016-10-17
+ * @date      : 2016-11-08
  * @copyright : Copyright 2008-2016 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -58,9 +58,6 @@ declare module Bridge {
     }
 
     var fn: fnMethods;
-
-    export class Attribute {
-    }
 
     export interface Array {
         get(arr: any[], indices: number[]): any;
@@ -230,6 +227,9 @@ declare module Bridge {
 }
 
 declare module System {
+    export class Attribute {
+    }
+
     export interface Nullable {
         hasValue(obj: any): boolean;
         getValue<T>(obj: T): T;
