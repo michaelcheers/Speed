@@ -1,12 +1,12 @@
 ﻿/*
- * @version   : 1.14.0 - Bridge.NET
+ * @version   : 15.0.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
  * @date      : 2016-06-08
- * @copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.
+ * @copyright : Copyright 2008-2016 Object.NET, Inc. http://object.net/
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
- */
+*/
 
- declare module Bridge {
+declare module Bridge {
     export function global<T>(): T;
     export function emptyFn(): Function;
     export function property(scope: any, name: string, defaultValue: any): void;
@@ -14,10 +14,10 @@
     export function copy<T>(to: T, from: T, keys: string[], toIf?: boolean): T;
     export function copy<T>(to: T, from: T, keys: string, toIf?: boolean): T;
     export function ns(ns: string, scope?: any): any;
-    export function ready(fn: {():void}): void;
+    export function ready(fn: { (): void }): void;
     export function on(event: string, el: HTMLElement, fn: Function): void;
     export function getHashCode(value: any, safe: boolean): number;
-    export function getDefaultValue<T>(type: {prototype:T}): T;
+    export function getDefaultValue<T>(type: { prototype: T }): T;
     export function getTypeName(obj: any): string;
     export function is(obj: any, type: any, ignoreFn?: boolean): boolean;
     export function as<T>(obj: any, type: { prototype: T }): T;
@@ -110,11 +110,11 @@
     }
 
     export interface IPromise {
-        then(fulfilledHandler: Function, errorHandler?: Function):void;
+        then(fulfilledHandler: Function, errorHandler?: Function): void;
     }
     var IPromise: Function;
 
-    export interface Int extends System.IComparable$1<Int>, System.IEquatable$1<Int>{
+    export interface Int extends System.IComparable$1<Int>, System.IEquatable$1<Int> {
         instanceOf(instance): boolean;
         getDefaultValue(): number;
         format(num: number, format?: string, provider?: System.Globalization.NumberFormatInfo): string;
@@ -227,7 +227,7 @@
     }
 
     var Validation: Validation;
- }
+}
 
 declare module System {
     export interface Nullable {
