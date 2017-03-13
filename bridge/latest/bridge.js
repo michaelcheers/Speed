@@ -1,7 +1,7 @@
 /*
- * @version   : 1.5.0 - Bridge.NET
+ * @version   : 1.6.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2015-05-27
+ * @date      : 2015-06-23
  * @copyright : Copyright (c) 2008-2015, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -1622,7 +1622,10 @@
         },
 
         set: function (scope, className, cls) {
-            var nameParts = className.split('.');
+            var nameParts = className.split('.'),
+                name,
+                key,
+                exists;
 
             for (i = 0; i < (nameParts.length - 1) ; i++) {
                 if (typeof scope[nameParts[i]] == 'undefined') {
@@ -1632,7 +1635,18 @@
                 scope = scope[nameParts[i]];
             }
 
-            scope[nameParts[nameParts.length - 1]] = cls;
+            name = nameParts[nameParts.length - 1];
+            exists = scope[name];
+
+            if (exists) {
+                for (key in exists) {
+                    if (typeof exists[key] === "function" && exists[key].$$name) {
+                        cls[key] = exists[key];
+                    }
+                }
+            }            
+
+            scope[name] = cls;
 
             return scope;
         },
@@ -4730,7 +4744,7 @@ Bridge.Class.generic('Bridge.List$1', function (T) {
 
         slice: function (start, end) {
             this.checkReadOnly();
-            this.items.slice(start, end);
+            return new Bridge.List$1(this.$$name.substr(this.$$name.lastIndexOf('$')+1))(this.items.slice(start, end));
         },
 
         sort: function (comparison) {
