@@ -1,7 +1,7 @@
 ﻿/*
- * @version   : 1.13.0 - Bridge.NET
+ * @version   : 1.14.0 - Bridge.NET
  * @author    : Object.NET, Inc. http://bridge.net/
- * @date      : 2016-05-03
+ * @date      : 2016-06-08
  * @copyright : Copyright (c) 2008-2016, Object.NET, Inc. (http://object.net/). All rights reserved.
  * @license   : See license.txt and https://github.com/bridgedotnet/Bridge.NET/blob/master/LICENSE.
  */
@@ -24,7 +24,7 @@
     export function cast<T>(obj: any, type: { prototype: T }): T;
     export function apply<T>(obj: T, values: any): T;
     export function merge<T>(to: T, from: T): T;
-    export function getEnumerator(obj: any): Bridge.IEnumerator;
+    export function getEnumerator(obj: any): System.Collections.IEnumerator;
     export function getPropertyNames(obj: any, includeFunctions?: boolean): string[];
     export function isDefined(value: any, noNull?: boolean): boolean;
     export function isEmpty(value: any, allowEmpty?: boolean): boolean;
@@ -59,6 +59,177 @@
 
     var fn: fnMethods;
 
+    export class Attribute {
+    }
+
+    export interface Array {
+        get(arr: any[], indices: number[]): any;
+        set(arr: any[], indices: number[], value: any);
+        getLength(arr: any[], dimension: number): number;
+        getRank(arr: any[]): number;
+        create(defValue: any, initValues: any[], sizes: number[]): any[];
+        toEnumerable(array: any[]): System.Collections.IEnumerable;
+        toEnumerable<T>(array: T[]): System.Collections.Generic.IEnumerable$1<T>;
+        toEnumerator(array: any[]): System.Collections.IEnumerator;
+        toEnumerator<T>(array: T[]): System.Collections.Generic.IEnumerator$1<T>;
+    }
+
+    var Array: Array;
+
+    export interface String {
+        isNullOrWhiteSpace(value: string): boolean;
+        isNullOrEmpty(value: string): boolean;
+        fromCharCount(c: number, count: number): string;
+        format(str: string, ...args: any[]): string;
+        alignString(str: string, alignment: number, pad: string, dir: number): string;
+        startsWith(str: string, prefix: string): boolean;
+        endsWith(str: string, suffix: string): boolean;
+        contains(str: string, value: string): string;
+        indexOfAny(str: string, anyOf: number[], startIndex?: number, length?: number): number;
+        indexOf(str: string, value: string): number;
+        compare(strA: string, strB: string): number;
+        toCharArray(str: string, startIndex: number, length: number): number[];
+    }
+
+    var String: String;
+
+    export interface Class {
+        define(className: string, props: any): Function;
+        define(className: string, scope: any, props: any): Function;
+        generic(className: string, props: any): Function;
+        generic(className: string, scope: any, props: any): Function;
+    }
+
+    var Class: Class;
+    export function define(className: string, props: any): Function;
+    export function define(className: string, scope: any, props: any): Function;
+
+    export class ErrorException extends System.Exception {
+        constructor(error: Error);
+        getError(): Error;
+    }
+
+    export interface IPromise {
+        then(fulfilledHandler: Function, errorHandler?: Function):void;
+    }
+    var IPromise: Function;
+
+    export interface Int extends System.IComparable$1<Int>, System.IEquatable$1<Int>{
+        instanceOf(instance): boolean;
+        getDefaultValue(): number;
+        format(num: number, format?: string, provider?: System.Globalization.NumberFormatInfo): string;
+        parseFloat(str: string, provider?: System.Globalization.NumberFormatInfo): number;
+        tryParseFloat(str: string, provider: System.Globalization.NumberFormatInfo, result: { v: number }): boolean;
+        parseInt(str: string, min?: number, max?: number, radix?: number): number;
+        tryParseInt(str: string, result: { v: number }, min?: number, max?: number, radix?: number): boolean;
+        trunc(num: number): number;
+        div(x: number, y: number): number;
+    }
+    var Int: Int;
+
+    export interface Browser {
+        isStrict: boolean;
+        isIEQuirks: boolean;
+        isOpera: boolean;
+        isOpera10_5: boolean;
+        isWebKit: boolean;
+        isChrome: boolean;
+        isSafari: boolean;
+        isSafari3: boolean;
+        isSafari4: boolean;
+        isSafari5: boolean;
+        isSafari5_0: boolean;
+        isSafari2: boolean;
+        isIE: boolean;
+        isIE6: boolean;
+        isIE7: boolean;
+        isIE7m: boolean;
+        isIE7p: boolean;
+        isIE8: boolean;
+        isIE8m: boolean;
+        isIE8p: boolean;
+        isIE9: boolean;
+        isIE9m: boolean;
+        isIE9p: boolean;
+        isIE10: boolean;
+        isIE10m: boolean;
+        isIE10p: boolean;
+        isIE11: boolean;
+        isIE11m: boolean;
+        isIE11p: boolean;
+        isGecko: boolean;
+        isGecko3: boolean;
+        isGecko4: boolean;
+        isGecko5: boolean;
+        isGecko10: boolean;
+        isFF3_0: boolean;
+        isFF3_5: boolean;
+        isFF3_6: boolean;
+        isFF4: boolean;
+        isFF5: boolean;
+        isFF10: boolean;
+        isLinux: boolean;
+        isWindows: boolean;
+        isMac: boolean;
+        chromeVersion: number;
+        firefoxVersion: number;
+        ieVersion: number;
+        operaVersion: number;
+        safariVersion: number;
+        webKitVersion: number;
+        isSecure: boolean;
+        isiPhone: boolean;
+        isiPod: boolean;
+        isiPad: boolean;
+        isBlackberry: boolean;
+        isAndroid: boolean;
+        isDesktop: boolean;
+        isTablet: boolean;
+        isPhone: boolean;
+        iOS: boolean;
+        standalone: boolean;
+    }
+
+    var Browser: Browser;
+
+    export class CustomEnumerator implements System.Collections.IEnumerator {
+        constructor(moveNext: Function, getCurrent: Function, reset?: Function, dispose?: Function, scope?: any);
+        moveNext(): boolean;
+        getCurrent(): any;
+        reset(): void;
+        dispose(): void;
+    }
+
+    export class ArrayEnumerator implements System.Collections.IEnumerator {
+        constructor(array: any[]);
+        moveNext(): boolean;
+        getCurrent(): any;
+        reset(): void;
+        dispose(): void;
+    }
+
+    export class ArrayEnumerable implements System.Collections.IEnumerable {
+        constructor(array: any[]);
+        getEnumerator(): ArrayEnumerator;
+    }
+
+    export interface Validation {
+        isNull(value: any): boolean;
+        isEmpty(value: any): boolean;
+        isNotEmptyOrWhitespace(value: any): boolean;
+        isNotNull(value: any): boolean;
+        isNotEmpty(value: any): boolean;
+        email(value: string): boolean;
+        url(value: string): boolean;
+        alpha(value: string): boolean;
+        alphaNum(value: string): boolean;
+        creditCard(value: string, type: string): boolean;
+    }
+
+    var Validation: Validation;
+ }
+
+declare module System {
     export interface Nullable {
         hasValue(obj: any): boolean;
         getValue<T>(obj: T): T;
@@ -106,34 +277,6 @@
 
     var Char: Char;
 
-    export interface String {
-        isNullOrWhiteSpace(value: string): boolean;
-        isNullOrEmpty(value: string): boolean;
-        fromCharCount(c: number, count: number): string;
-        format(str: string, ...args: any[]): string;
-        alignString(str: string, alignment: number, pad: string, dir: number): string;
-        startsWith(str: string, prefix: string): boolean;
-        endsWith(str: string, suffix: string): boolean;
-        contains(str: string, value: string): string;
-        indexOfAny(str: string, anyOf: number[], startIndex?: number, length?: number): number;
-        indexOf(str: string, value: string): number;
-        compare(strA: string, strB: string): number;
-        toCharArray(str: string, startIndex: number, length: number): number[];
-    }
-
-    var String: String;
-
-    export interface Class {
-        define(className: string, props: any): Function;
-        define(className: string, scope: any, props: any): Function;
-        generic(className: string, props: any): Function;
-        generic(className: string, scope: any, props: any): Function;
-    }
-
-    var Class: Class;
-    export function define(className: string, props: any): Function;
-    export function define(className: string, scope: any, props: any): Function;
-
     export class Exception {
         constructor(message: string, innerException?: Exception);
         getMessage(): string;
@@ -143,11 +286,6 @@
         toString(): string;
         static create(error: string): Exception;
         static create(error: Error): Exception;
-    }
-
-    export class ErrorException extends Exception {
-        constructor(error: Error);
-        getError(): Error;
     }
 
     export class SystemException extends Exception {
@@ -179,15 +317,6 @@
     export class ArgumentOutOfRangeException extends ArgumentException {
         constructor(paramName: string, message?: string, innerException?: Exception, actualValue?: any);
         getActualValue<T>(): T;
-    }
-
-    export class CultureNotFoundException extends ArgumentException {
-        constructor(paramName: string, invalidCultureName?: string, message?: string, innerException?: Exception);
-        getInvalidCultureName(): string;
-    }
-
-    export class KeyNotFoundException extends Exception {
-        constructor(message?: string, innerException?: Exception);
     }
 
     export class ArithmeticException extends Exception {
@@ -259,66 +388,19 @@
         prototype: IEquatable$1<T>;
     }
 
-    export interface IPromise {
-        then(fulfilledHandler: Function, errorHandler?: Function):void;
-    }
-    var IPromise: Function;
-
     export interface IDisposable {
         dispose(): void;
     }
     var IDisposable: Function;
 
-    export class DateTimeFormatInfo implements IFormatProvider, ICloneable {
-        invariantInfo: DateTimeFormatInfo;
-        clone(): any;
-        getFormat(type: any): any;
-        getAbbreviatedDayName(dayofweek: number): string;
-        getAbbreviatedMonthName(month: number): string;
-        getAllDateTimePatterns(format: string, returnNull?: boolean): string[];
-        getDayName(dayofweek: number): string;
-        getMonthName(month: number): string;
-        getShortestDayName(dayofweek: number): string;
-    }
-
-    export class NumberFormatInfo implements IFormatProvider, ICloneable {
-        invariantInfo: NumberFormatInfo;
-        clone(): any;
-        getFormat(type: any): any;
-    }
-
-    export class CultureInfo implements IFormatProvider, ICloneable {
-        constructor(name: string);
-        invariantCulture: CultureInfo;
-        clone(): any;
-        getFormat(type: any): any;
-        static getCurrentCulture(): CultureInfo;
-        static setCurrentCulture(culture: CultureInfo): void;
-        static getCultureInfo(name: string): CultureInfo;
-        static getCultures(): CultureInfo[];
-    }
-
-    export interface Int extends IComparable$1<Int>, IEquatable$1<Int>{
-        instanceOf(instance): boolean;
-        getDefaultValue(): number;
-        format(num: number, format?: string, provider?: NumberFormatInfo): string;
-        parseFloat(str: string, provider?: NumberFormatInfo): number;
-        tryParseFloat(str: string, provider: NumberFormatInfo, result: { v: number }): boolean;
-        parseInt(str: string, min?: number, max?: number, radix?: number): number;
-        tryParseInt(str: string, result: { v: number }, min?: number, max?: number, radix?: number): boolean;
-        trunc(num: number): number;
-        div(x: number, y: number): number;
-    }
-    var Int: Int;
-
     export interface DateTime {
         utcNow(): Date;
         today(): Date;
-        format(date: Date, format?: string, provider?: DateTimeFormatInfo): string;
-        parse(value: string, provider?: DateTimeFormatInfo): Date;
-        parseExact(str: string, format?: string, provider?: DateTimeFormatInfo, silent?: boolean): Date;
-        tryParse(str: string, provider: DateTimeFormatInfo, result: { v: Date }): boolean;
-        tryParseExact(str: string, format: string, provider: DateTimeFormatInfo, result: { v: Date }): boolean;
+        format(date: Date, format?: string, provider?: System.Globalization.DateTimeFormatInfo): string;
+        parse(value: string, provider?: System.Globalization.DateTimeFormatInfo): Date;
+        parseExact(str: string, format?: string, provider?: System.Globalization.DateTimeFormatInfo, silent?: boolean): Date;
+        tryParse(str: string, provider: System.Globalization.DateTimeFormatInfo, result: { v: Date }): boolean;
+        tryParseExact(str: string, format: string, provider: System.Globalization.DateTimeFormatInfo, result: { v: Date }): boolean;
         isDaylightSavingTime(dt: Date): boolean;
         toUTC(dt: Date): Date;
         toLocal(dt: Date): Date;
@@ -352,8 +434,245 @@
         negate(): TimeSpan;
         compareTo(other: TimeSpan): number;
         equals(other: TimeSpan): boolean;
-        format(str: string, provider?: DateTimeFormatInfo): string;
-        toString(str: string, provider?: DateTimeFormatInfo): string;
+        format(str: string, provider?: System.Globalization.DateTimeFormatInfo): string;
+        toString(str: string, provider?: System.Globalization.DateTimeFormatInfo): string;
+    }
+
+    module Collections {
+        export interface IEnumerable {
+            getEnumerator(): IEnumerator;
+        }
+        var IEnumerable: Function;
+
+        export interface IEnumerator {
+            getCurrent(): any;
+            moveNext(): boolean;
+            reset(): void;
+        }
+        var IEnumerator: Function;
+
+        export interface IEqualityComparer {
+            equals(x: any, y: any): boolean;
+            getHashCode(obj: any): number;
+        }
+        var IEqualityComparer: Function;
+
+        export interface ICollection extends IEnumerable {
+            getCount(): number;
+        }
+        var ICollection: Function;
+
+        module Generic {
+            export class KeyNotFoundException extends Exception {
+                constructor(message?: string, innerException?: Exception);
+            }
+            export interface IEnumerator$1<T> extends IEnumerator {
+                getCurrent(): T;
+            }
+            export function IEnumerator$1<T>(T: { prototype: T }): {
+                prototype: IEnumerator$1<T>;
+            }
+
+            export interface IEnumerable$1<T> extends IEnumerable {
+                getEnumerator(): IEnumerator$1<T>;
+            }
+            export function IEnumerable$1<T>(T: { prototype: T }): {
+                prototype: IEnumerable$1<T>;
+            }
+
+            export interface ICollection$1<T> extends IEnumerable$1<T> {
+                getCount(): number;
+                add(item: T): void;
+                clear(): void;
+                contains(item: T): boolean;
+                remove(item: T): boolean;
+            }
+            export function ICollection$1<T>(T: { prototype: T }): {
+                prototype: ICollection$1<T>;
+            }
+
+            export interface IEqualityComparer$1<T> extends IEqualityComparer {
+                equals(x: T, y: T): boolean;
+                getHashCode(obj: T): number;
+            }
+            export function IEqualityComparer$1<T>(T: { prototype: T }): {
+                prototype: IEqualityComparer$1<T>;
+            }
+
+            export interface IDictionary$2<TKey, TValue> extends IEnumerable$1<KeyValuePair$2<TKey, TValue>> {
+                get(key: TKey): TValue;
+                set(key: TKey, value: TValue): void;
+                getKeys(): ICollection$1<TKey>;
+                getValues(): ICollection$1<TValue>;
+                getCount(): number;
+                containsKey(key: TKey): boolean;
+                add(key: TKey, value: TValue): void;
+                remove(key: TKey): boolean;
+                tryGetValue(key: TKey, value: { v: TValue }): boolean;
+            }
+            export function IDictionary$2<TKey, TValue>(TKey: { prototype: TKey }, TValue: { prototype: TValue }): {
+                prototype: IDictionary$2<TKey, TValue>;
+            }
+
+            export interface IList$1<T> extends ICollection$1<T> {
+                get(index: number): T;
+                set(index: number, value: T): void;
+                indexOf(item: T): number;
+                insert(index: number, item: T): void;
+                removeAt(index: number): void;
+            }
+            export function IList$1<T>(T: { prototype: T }): {
+                prototype: IList$1<T>;
+            }
+
+            export interface IComparer$1<T> {
+                compare(x: T, y: T): number;
+            }
+            export function IComparer$1<T>(T: { prototype: T }): {
+                prototype: IComparer$1<T>;
+            }
+
+            export interface EqualityComparer$1<T> extends IEqualityComparer$1<T> {
+                equals(x: T, y: T): boolean;
+                getHashCode(obj: T): number;
+            }
+            export function EqualityComparer$1<T>(T: { prototype: T }): {
+                prototype: EqualityComparer$1<T>;
+                new (): EqualityComparer$1<T>;
+            }
+
+            export interface Comparer$1<T> extends IComparer$1<T> {
+                compare(x: T, y: T): number;
+            }
+            export function Comparer$1<T>(T: { prototype: T }): {
+                prototype: Comparer$1<T>;
+                new (fn: { (x: T, y: T): number }): Comparer$1<T>;
+            }
+
+            export interface KeyValuePair$2<TKey, TValue> {
+                key: TKey;
+                value: TValue;
+            }
+            export function KeyValuePair$2<TKey, TValue>(TKey: { prototype: TKey }, TValue: { prototype: TValue }): {
+                prototype: KeyValuePair$2<TKey, TValue>;
+                new (key: TKey, value: TValue): KeyValuePair$2<TKey, TValue>;
+            }
+
+            export interface Dictionary$2<TKey, TValue> extends IDictionary$2<TKey, TValue> {
+                getKeys(): ICollection$1<TKey>;
+                getValues(): ICollection$1<TValue>;
+                clear(): void;
+                containsKey(key: TKey): boolean;
+                containsValue(value: TValue): boolean;
+                get(key: TKey): TValue;
+                set(key: TKey, value: TValue, add?: boolean): void;
+                add(key: TKey, value: TValue): void;
+                remove(key: TKey): boolean;
+                getCount(): number;
+                getComparer(): IEqualityComparer$1<TKey>;
+                tryGetValue(key: TKey, value: { v: TValue }): boolean;
+                getEnumerator(): IEnumerator$1<KeyValuePair$2<TKey, TValue>>;
+            }
+            export function Dictionary$2<TKey, TValue>(TKey: { prototype: TKey }, TValue: { prototype: TValue }): {
+                prototype: Dictionary$2<TKey, TValue>;
+                new (): Dictionary$2<TKey, TValue>;
+                new (obj: Dictionary$2<TKey, TValue>, comparer?: IEqualityComparer$1<TKey>): Dictionary$2<TKey, TValue>;
+                new (obj: any, comparer?: IEqualityComparer$1<TKey>): Dictionary$2<TKey, TValue>;
+            }
+
+            export interface List$1<T> extends ICollection$1<T>, IList$1<T> {
+                getCount(): number;
+                get(index: number): T;
+                set(index: number, value: T): void;
+                add(value: T): void;
+                addRange(items: T[]);
+                addRange(items: IEnumerable$1<T>);
+                clear(): void;
+                indexOf(item: T, startIndex?: number): number;
+                insertRange(index: number, items: IEnumerable$1<T>): void;
+                contains(item: T): boolean;
+                getEnumerator(): IEnumerator$1<T>;
+                getRange(index: number, count?: number): List$1<T>;
+                getRange(): List$1<T>;
+                insert(index: number, item: T): void;
+                join(delimeter?: string): string;
+                lastIndexOf(item: T, fromIndex?: number): number;
+                remove(item: T): boolean;
+                removeAt(index: number): void;
+                removeRange(index: number, count: number): void;
+                reverse(): void;
+                slice(start: number, end: number): void;
+                sort(comparison?: { (x: T, y: T): number });
+                splice(start: number, deleteCount: number, itemsToInsert?: IEnumerable$1<T>): void;
+                splice(start: number, deleteCount: number, itemsToInsert?: T[]): void;
+                unshift(): void;
+                toArray(): T[];
+            }
+            export function List$1<T>(T: { prototype: T }): {
+                prototype: List$1<T>;
+                new (): List$1<T>;
+                new (obj: T[]): List$1<T>;
+                new (obj: IEnumerable$1<T>): List$1<T>;
+            }
+        }
+
+        module ObjectModel {
+            export interface ReadOnlyCollection$1<T> extends System.Collections.Generic.List$1<T> {
+            }
+            export function ReadOnlyCollection$1<T>(T: { prototype: T }): {
+                prototype: ReadOnlyCollection$1<T>;
+                new (obj: T[]): ReadOnlyCollection$1<T>;
+                new (obj: System.Collections.Generic.IEnumerable$1<T>): ReadOnlyCollection$1<T>;
+            }
+        }
+    }
+
+    module ComponentModel {
+        export interface INotifyPropertyChanged {
+            propertyChanged(sender: any, e: PropertyChangedEventArgs): void;
+        }
+        var INotifyPropertyChanged: Function;
+
+        export class PropertyChangedEventArgs {
+            constructor(propertyName: string);
+            propertyName: string;
+        }
+    }
+
+    module Globalization {
+        export class CultureNotFoundException extends ArgumentException {
+            constructor(paramName: string, invalidCultureName?: string, message?: string, innerException?: Exception);
+            getInvalidCultureName(): string;
+        }
+
+        export class DateTimeFormatInfo implements IFormatProvider, ICloneable {
+            invariantInfo: DateTimeFormatInfo;
+            clone(): any;
+            getFormat(type: any): any;
+            getAbbreviatedDayName(dayofweek: number): string;
+            getAbbreviatedMonthName(month: number): string;
+            getAllDateTimePatterns(format: string, returnNull?: boolean): string[];
+            getDayName(dayofweek: number): string;
+            getMonthName(month: number): string;
+            getShortestDayName(dayofweek: number): string;
+        }
+
+        export class NumberFormatInfo implements IFormatProvider, ICloneable {
+            invariantInfo: NumberFormatInfo;
+            clone(): any;
+            getFormat(type: any): any;
+        }
+
+        export class CultureInfo implements IFormatProvider, ICloneable {
+            constructor(name: string);
+            invariantCulture: CultureInfo;
+            clone(): any;
+            getFormat(type: any): any;
+            static getCurrentCulture(): CultureInfo;
+            static setCurrentCulture(culture: CultureInfo): void;
+            static getCultureInfo(name: string): CultureInfo;
+            static getCultures(): CultureInfo[];
+        }
     }
 
     module Text {
@@ -379,344 +698,40 @@
         }
     }
 
-    export interface Browser {
-        isStrict: boolean;
-        isIEQuirks: boolean;
-        isOpera: boolean;
-        isOpera10_5: boolean;
-        isWebKit: boolean;
-        isChrome: boolean;
-        isSafari: boolean;
-        isSafari3: boolean;
-        isSafari4: boolean;
-        isSafari5: boolean;
-        isSafari5_0: boolean;
-        isSafari2: boolean;
-        isIE: boolean;
-        isIE6: boolean;
-        isIE7: boolean;
-        isIE7m: boolean;
-        isIE7p: boolean;
-        isIE8: boolean;
-        isIE8m: boolean;
-        isIE8p: boolean;
-        isIE9: boolean;
-        isIE9m: boolean;
-        isIE9p: boolean;
-        isIE10: boolean;
-        isIE10m: boolean;
-        isIE10p: boolean;
-        isIE11: boolean;
-        isIE11m: boolean;
-        isIE11p: boolean;
-        isGecko: boolean;
-        isGecko3: boolean;
-        isGecko4: boolean;
-        isGecko5: boolean;
-        isGecko10: boolean;
-        isFF3_0: boolean;
-        isFF3_5: boolean;
-        isFF3_6: boolean;
-        isFF4: boolean;
-        isFF5: boolean;
-        isFF10: boolean;
-        isLinux: boolean;
-        isWindows: boolean;
-        isMac: boolean;
-        chromeVersion: number;
-        firefoxVersion: number;
-        ieVersion: number;
-        operaVersion: number;
-        safariVersion: number;
-        webKitVersion: number;
-        isSecure: boolean;
-        isiPhone: boolean;
-        isiPod: boolean;
-        isiPad: boolean;
-        isBlackberry: boolean;
-        isAndroid: boolean;
-        isDesktop: boolean;
-        isTablet: boolean;
-        isPhone: boolean;
-        iOS: boolean;
-        standalone: boolean;
+    module Threading {
+        module Tasks {
+            export class Task {
+                constructor(action: Function, state?: any);
+                static delay(delay: number, state?: any): Task;
+                static fromResult(result: any): Task;
+                static run(fn: Function): Task;
+                static whenAll(tasks: Task[]): Task;
+                static whenAny(tasks: Task[]): Task;
+                static fromCallback(target: any, method: string, ...otherArguments: any[]): Task;
+                static fromCallbackResult(target: any, method: string, resultHandler: Function, ...otherArguments: any[]): Task;
+                static fromCallbackOptions(target: any, method: string, name: string, ...otherArguments: any[]): Task;
+                static fromPromise(promise: Bridge.IPromise, handler: Function): Task;
+                continueWith(continuationAction: Function): Task;
+                start(): void;
+                complete(result?: any): boolean;
+                isCanceled(): boolean;
+                isCompleted(): boolean;
+                isFaulted(): boolean;
+                getResult<T>(): T;
+                setCanceled(): void;
+                setResult(result: any): void;
+                setError(error: Exception): void;
+            }
+        }
     }
-
-    var Browser: Browser;
-
-    export interface IEnumerable {
-        getEnumerator(): IEnumerator;
-    }
-    var IEnumerable: Function;
-
-    export interface IEnumerator {
-        getCurrent(): any;
-        moveNext(): boolean;
-        reset(): void;
-    }
-    var IEnumerator: Function;
-
-    export interface IEqualityComparer {
-        equals(x: any, y: any): boolean;
-        getHashCode(obj: any): number;
-    }
-    var IEqualityComparer: Function;
-
-    export interface ICollection extends IEnumerable {
-        getCount(): number;
-    }
-    var ICollection: Function;
-
-    export interface IEnumerator$1<T> extends IEnumerator {
-        getCurrent(): T;
-    }
-    export function IEnumerator$1<T>(T: { prototype: T }): {
-        prototype: IEnumerator$1<T>;
-    }
-
-    export interface IEnumerable$1<T> extends IEnumerable {
-        getEnumerator(): IEnumerator$1<T>;
-    }
-    export function IEnumerable$1<T>(T: { prototype: T }): {
-        prototype: IEnumerable$1<T>;
-    }
-
-    export interface ICollection$1<T> extends IEnumerable$1<T> {
-        getCount(): number;
-        add(item: T): void;
-        clear(): void;
-        contains(item: T): boolean;
-        remove(item: T): boolean;
-    }
-    export function ICollection$1<T>(T: { prototype: T }): {
-        prototype: ICollection$1<T>;
-    }
-
-    export interface IEqualityComparer$1<T> extends IEqualityComparer {
-        equals(x: T, y: T): boolean;
-        getHashCode(obj: T): number;
-    }
-    export function IEqualityComparer$1<T>(T: { prototype: T }): {
-        prototype: IEqualityComparer$1<T>;
-    }
-
-    export interface IDictionary$2<TKey, TValue> extends IEnumerable$1<KeyValuePair$2<TKey, TValue>> {
-        get(key: TKey): TValue;
-        set(key: TKey, value: TValue): void;
-        getKeys(): ICollection$1<TKey>;
-        getValues(): ICollection$1<TValue>;
-        getCount(): number;
-        containsKey(key: TKey): boolean;
-        add(key: TKey, value: TValue): void;
-        remove(key: TKey): boolean;
-        tryGetValue(key: TKey, value: { v: TValue }): boolean;
-    }
-    export function IDictionary$2<TKey, TValue>(TKey: { prototype: TKey }, TValue: { prototype: TValue }): {
-        prototype: IDictionary$2<TKey, TValue>;
-    }
-
-    export interface IList$1<T> extends ICollection$1<T> {
-        get(index: number): T;
-        set(index: number, value: T): void;
-        indexOf(item: T): number;
-        insert(index: number, item: T): void;
-        removeAt(index: number): void;
-    }
-    export function IList$1<T>(T: { prototype: T }): {
-        prototype: IList$1<T>;
-    }
-
-    export interface IComparer$1<T> {
-        compare(x: T, y: T): number;
-    }
-    export function IComparer$1<T>(T: { prototype: T }): {
-        prototype: IComparer$1<T>;
-    }
-
-    export class CustomEnumerator implements IEnumerator {
-        constructor(moveNext: Function, getCurrent: Function, reset?: Function, dispose?: Function, scope?: any);
-        moveNext(): boolean;
-        getCurrent(): any;
-        reset(): void;
-        dispose(): void;
-    }
-
-    export class ArrayEnumerator implements IEnumerator {
-        constructor(array: any[]);
-        moveNext(): boolean;
-        getCurrent(): any;
-        reset(): void;
-        dispose(): void;
-    }
-
-    export class ArrayEnumerable implements IEnumerable {
-        constructor(array: any[]);
-        getEnumerator(): ArrayEnumerator;
-    }
-
-    export interface EqualityComparer$1<T> extends IEqualityComparer$1<T> {
-        equals(x: T, y: T): boolean;
-        getHashCode(obj: T): number;
-    }
-    export function EqualityComparer$1<T>(T: { prototype: T }): {
-        prototype: EqualityComparer$1<T>;
-        new (): EqualityComparer$1<T>;
-    }
-
-    export interface Comparer$1<T> extends IComparer$1<T> {
-        compare(x: T, y: T): number;
-    }
-    export function Comparer$1<T>(T: { prototype: T }): {
-        prototype: Comparer$1<T>;
-        new (fn: {(x: T, y: T): number}): Comparer$1<T>;
-    }
-
-    export interface KeyValuePair$2<TKey, TValue> {
-        key: TKey;
-        value: TValue;
-    }
-    export function KeyValuePair$2<TKey, TValue>(TKey: { prototype: TKey }, TValue: { prototype: TValue }): {
-        prototype: KeyValuePair$2<TKey, TValue>;
-        new (key: TKey, value: TValue): KeyValuePair$2<TKey, TValue>;
-    }
-
-    export interface Dictionary$2<TKey, TValue> extends IDictionary$2<TKey, TValue>{
-        getKeys(): ICollection$1<TKey>;
-        getValues(): ICollection$1<TValue>;
-        clear(): void;
-        containsKey(key: TKey): boolean;
-        containsValue(value: TValue): boolean;
-        get(key: TKey): TValue;
-        set(key: TKey, value: TValue, add?: boolean): void;
-        add(key: TKey, value: TValue): void;
-        remove(key: TKey): boolean;
-        getCount(): number;
-        getComparer(): IEqualityComparer$1<TKey>;
-        tryGetValue(key: TKey, value: {v: TValue}): boolean;
-        getEnumerator(): IEnumerator$1<KeyValuePair$2<TKey, TValue>>;
-    }
-    export function Dictionary$2<TKey, TValue>(TKey: { prototype: TKey }, TValue: { prototype: TValue }): {
-        prototype: Dictionary$2<TKey, TValue>;
-        new (): Dictionary$2<TKey, TValue>;
-        new (obj: Dictionary$2<TKey, TValue>, comparer?: IEqualityComparer$1<TKey>): Dictionary$2<TKey, TValue>;
-        new (obj: any, comparer?: IEqualityComparer$1<TKey>): Dictionary$2<TKey, TValue>;
-    }
-
-     export interface List$1<T> extends ICollection$1<T>, IList$1<T> {
-        getCount(): number;
-        get(index: number): T;
-        set(index: number, value: T): void;
-        add(value: T): void;
-        addRange(items: T[]);
-        addRange(items: IEnumerable$1<T>);
-        clear(): void;
-        indexOf(item: T, startIndex?: number): number;
-        insertRange(index: number, items: IEnumerable$1<T>): void;
-        contains(item: T): boolean;
-        getEnumerator(): IEnumerator$1<T>;
-        getRange(index: number, count?: number): List$1<T>;
-        getRange(): List$1<T>;
-        insert(index: number, item: T): void;
-        join(delimeter?: string): string;
-        lastIndexOf(item: T, fromIndex?: number): number;
-        remove(item: T): boolean;
-        removeAt(index: number): void;
-        removeRange(index: number, count: number): void;
-        reverse(): void;
-        slice(start: number, end: number): void;
-        sort(comparison?: { (x: T, y: T): number });
-        splice(start: number, deleteCount: number, itemsToInsert?: IEnumerable$1<T>): void;
-        splice(start: number, deleteCount: number, itemsToInsert?: T[]): void;
-        unshift(): void;
-        toArray(): T[];
-    }
-    export function List$1<T>(T: { prototype: T }): {
-        prototype: List$1<T>;
-        new (): List$1<T>;
-        new (obj: T[]): List$1<T>;
-        new (obj: IEnumerable$1<T>): List$1<T>;
-    }
-
-    export interface ReadOnlyCollection$1<T> extends List$1<T> {
-    }
-    export function ReadOnlyCollection$1<T>(T: { prototype: T }): {
-        prototype: ReadOnlyCollection$1<T>;
-        new (obj: T[]): ReadOnlyCollection$1<T>;
-        new (obj: IEnumerable$1<T>): ReadOnlyCollection$1<T>;
-    }
-
-    export class Task {
-        constructor(action: Function, state?: any);
-        static delay(delay: number, state?: any): Task;
-        static fromResult(result: any): Task;
-        static run(fn: Function): Task;
-        static whenAll(tasks: Task[]): Task;
-        static whenAny(tasks: Task[]): Task;
-        static fromCallback(target: any, method: string, ...otherArguments: any[]): Task;
-        static fromCallbackResult(target: any, method: string, resultHandler: Function, ...otherArguments: any[]): Task;
-        static fromCallbackOptions(target: any, method: string, name: string, ...otherArguments: any[]): Task;
-        static fromPromise(promise: IPromise, handler: Function): Task;
-        continueWith(continuationAction: Function): Task;
-        start(): void;
-        complete(result?: any): boolean;
-        isCanceled(): boolean;
-        isCompleted(): boolean;
-        isFaulted(): boolean;
-        getResult<T>(): T;
-        setCanceled(): void;
-        setResult(result: any): void;
-        setError(error: Exception): void;
-    }
-
-    export interface Validation {
-        isNull(value: any): boolean;
-        isEmpty(value: any): boolean;
-        isNotEmptyOrWhitespace(value: any): boolean;
-        isNotNull(value: any): boolean;
-        isNotEmpty(value: any): boolean;
-        email(value: string): boolean;
-        url(value: string): boolean;
-        alpha(value: string): boolean;
-        alphaNum(value: string): boolean;
-        creditCard(value: string, type: string): boolean;
-    }
-
-    var Validation: Validation;
-
-    export class Attribute {
-    }
-
-    export interface INotifyPropertyChanged {
-        propertyChanged(sender: any, e: PropertyChangedEventArgs): void;
-    }
-    var INotifyPropertyChanged: Function;
-
-    export class PropertyChangedEventArgs {
-        constructor(propertyName: string);
-        propertyName: string;
-    }
-
-    export interface Array {
-        get(arr: any[], indices: number[]): any;
-        set(arr: any[], indices: number[], value: any);
-        getLength(arr: any[], dimension: number): number;
-        getRank(arr: any[]): number;
-        create(defValue: any, initValues: any[], sizes: number[]): any[];
-        toEnumerable(array: any[]): IEnumerable;
-        toEnumerable<T>(array: T[]): IEnumerable$1<T>;
-        toEnumerator(array: any[]): IEnumerator;
-        toEnumerator<T>(array: T[]): IEnumerator$1<T>;
-    }
-
-    var Array: Array;
 }
 
 declare module Bridge.Linq {
     interface EnumerableStatic {
         Utils: {
             createLambda(expression: any): (...params: any[]) => any;
-            createEnumerable(getEnumerator: () => IEnumerator): Enumerable;
-            createEnumerator(initialize: () => void, tryGetNext: () => boolean, dispose: () => void): IEnumerator;
+            createEnumerable(getEnumerator: () => System.Collections.IEnumerator): Enumerable;
+            createEnumerator(initialize: () => void, tryGetNext: () => boolean, dispose: () => void): System.Collections.IEnumerator;
             extendTo(type: any): void;
         };
         choice(...params: any[]): Enumerable;
@@ -744,8 +759,8 @@ declare module Bridge.Linq {
     }
 
     interface Enumerable {
-        constructor(getEnumerator: () => IEnumerator): Enumerable;
-        getEnumerator(): IEnumerator;
+        constructor(getEnumerator: () => System.Collections.IEnumerator): Enumerable;
+        getEnumerator(): System.Collections.IEnumerator;
 
         // Extension Methods
         traverseBreadthFirst(func: (element: any) => Enumerable, resultSelector?: (element: any, nestLevel: number) => any): Enumerable;
