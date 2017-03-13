@@ -178,7 +178,4 @@ AutoTest.Net/
 *.bim_*.settings
 
 # Microsoft Fakes
-FakesAssemblies/
-*.ts
-*.d.ts
 *.nupkg
