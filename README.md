@@ -6,8 +6,8 @@ https://speed.bridge.net/bridge/{VersionNumber}/bridge.min.js
 
 Name | Url
 ---- | ----
-bridge.min.js | https://speed.bridge.net/bridge/15.7.0/bridge.min.js
-bridge.js | https://speed.bridge.net/bridge/15.7.0/bridge.js
-bridge.d.ts | https://speed.bridge.net/bridge/15.7.0/bridge.d.ts
+bridge.min.js | https://speed.bridge.net/bridge/16.0.0-beta/bridge.min.js
+bridge.js | https://speed.bridge.net/bridge/16.0.0-beta/bridge.js
+bridge.d.ts | https://speed.bridge.net/bridge/16.0.0-beta/bridge.d.ts
 
-**Last Updated:** 2017-03-08T05:52:00
+**Last Updated:** 2017-05-01
