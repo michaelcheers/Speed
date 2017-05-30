@@ -14,4 +14,4 @@ bridge.d.ts | https://speed.bridge.net/bridge/16.0.0-beta/bridge.d.ts
 bridge.console.js | https://speed.bridge.net/bridge/16.0.0-beta/bridge.console.js
 bridge.console.min.js | https://speed.bridge.net/bridge/16.0.0-beta/bridge.console.min.js
 
-**Last Updated:** 2017-05-01
+**Last Updated:** 2017-05-30
